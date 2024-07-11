@@ -1,0 +1,58 @@
+package template
+
+import shared "app/internal/template/shared"
+
+templ Base() {
+	<html>
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<script src="https://unpkg.com/htmx.org@1.9.11"></script>
+			<script src="https://unpkg.com/htmx.org/dist/ext/sse.js"></script>
+			<link rel="stylesheet" href="/static/css/output.css"/>
+		</head>
+		<body>
+			<main id="container" class="flex flex-col w-screen h-screen bg-white " hx-ext="sse" sse-connect="/events">
+				{ children... }
+			</main>
+		</body>
+	</html>
+}
+
+templ Count(count string) {
+	<div class="flex flex-col items-center justify-center">
+		<h1 class="text-4xl font-bold">{ count }</h1>
+		<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" hx-post="/count" hx-target="#count">{ count }</button>
+	</div>
+}
+
+templ Home(title string, count string) {
+	@Base() {
+		@shared.Nav("/")
+		<div>
+			@shared.TextAndTitle("I'm a shared!", "I am included as a content item in the Base Template!")
+			@shared.TextAndTitle("I'm another shared!", "I am also included in the Base Template!")
+			@shared.Count(count)
+			@SSE()
+			@shared.Random()
+		</div>
+	}
+}
+
+templ Recipes() {
+	@Base() {
+		@shared.Nav("/recipes")
+		<div>
+			@shared.TextAndTitle("Recipes", " This is the recipes page")
+			//@SSE()
+			@shared.Random()
+		</div>
+	}
+}
+
+templ SSE() {
+	<div>
+		<h1>SSE Example with HTMX</h1>
+		<div sse-swap="Event"></div>
+	</div>
+}

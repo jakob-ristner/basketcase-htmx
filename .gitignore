@@ -1,0 +1,8 @@
+.env
+./tmp
+
+*template_*
+node_modules/
+.vscode/
+tmp/    
+*_templ.go

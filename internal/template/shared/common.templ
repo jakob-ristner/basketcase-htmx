@@ -1,0 +1,30 @@
+package shared
+
+templ Base2() {
+	<html>
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<script src="https://unpkg.com/htmx.org@1.9.11"></script>
+			<script src="https://unpkg.com/htmx.org/dist/ext/sse.js"></script>
+			<link rel="stylesheet" href="/static/css/output.css"/>
+		</head>
+		<body>
+			<main id="container" class="flex flex-col w-screen h-screen bg-white " hx-ext="sse" sse-connect="/events">
+				{ children... }
+			</main>
+		</body>
+	</html>
+}
+
+
+templ Nav(current string) {
+	<div class="flex justify-between p-6">
+		// <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" hx-trigger="click" hx-get="/" hx-select="#container" hx-target="#container" hx-push-url="true">Home</button>
+		// <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" hx-trigger="click" hx-get="/recipes" hx-select="#container" hx-target="#container" hx-push-url="true">Recipes</button>
+		// <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" hx-trigger="click" >Ingredients</button>
+
+		@navButton("/", current, "Home")
+		@navButton("/recipes", current, "Recipes")
+	</div>
+}
