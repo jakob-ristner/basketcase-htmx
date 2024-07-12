@@ -6,3 +6,5 @@ node_modules/
 .vscode/
 tmp/    
 *_templ.go
+
+*.exe

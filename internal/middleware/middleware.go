@@ -9,13 +9,14 @@ import (
 
 type CustomContext struct {
 	context.Context
+	token     string
 	StartTime time.Time
 }
 
 type CustomHandler func(ctx *CustomContext, w http.ResponseWriter, r *http.Request)
 type CustomMiddleware func(ctx *CustomContext, w http.ResponseWriter, r *http.Request) error
 
-func Chain(w http.ResponseWriter, r *http.Request, handler CustomHandler, middleware ...CustomMiddleware) {
+func Chain(log bool, w http.ResponseWriter, r *http.Request, handler CustomHandler, middleware ...CustomMiddleware) {
 	customContext := &CustomContext{
 		Context:   context.Background(),
 		StartTime: time.Now(),
@@ -27,7 +28,10 @@ func Chain(w http.ResponseWriter, r *http.Request, handler CustomHandler, middle
 		}
 	}
 	handler(customContext, w, r)
-	Log(customContext, w, r)
+
+	if log {
+		Log(customContext, w, r)
+	}
 }
 
 func Log(ctx *CustomContext, w http.ResponseWriter, r *http.Request) error {

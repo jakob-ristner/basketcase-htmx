@@ -1,7 +1,6 @@
 package main
 
 import (
-	dbHandler "app/internal/database"
 	"app/internal/middleware"
 	shared "app/internal/template/shared"
 	"app/internal/view"
@@ -17,53 +16,35 @@ import (
 	"github.com/joho/godotenv"
 )
 
-type User struct {
-	ID   int
-	Date time.Time
-	Name string
-}
-
 func main() {
 
 	_ = godotenv.Load()
 	mux := http.NewServeMux()
 
-	db := dbHandler.NewDbHandler()
-	users := db.GetUsers()
-
-	testListener := make(chan dbHandler.Notification)
-
-	db.AddListener(testListener)
-	go func() {
-		for notif := range testListener {
-			fmt.Println(notif)
-		}
-	}()
-
-	for _, user := range users {
-		fmt.Printf("ID: %d, date: %s, Name: %s\n", user.ID, user.Date.Format(time.DateOnly), user.Name)
-	}
-
 	mux.HandleFunc("GET /favicon.ico", view.ServeFavicon)
 	mux.HandleFunc("GET /static/", view.ServeStaticFiles)
 	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
-		middleware.Chain(w, r, view.Home)
+		middleware.Chain(true, w, r, view.Home, middleware.Auth)
 	})
 
 	mux.HandleFunc("GET /recipes", func(w http.ResponseWriter, r *http.Request) {
-		middleware.Chain(w, r, view.Recipes)
+		middleware.Chain(true, w, r, view.Recipes)
 	})
 	mux.HandleFunc("GET /login", func(w http.ResponseWriter, r *http.Request) {
-		middleware.Chain(w, r, view.Login)
+		middleware.Chain(true, w, r, view.Login)
+	})
+
+	mux.HandleFunc("POST /login", func(w http.ResponseWriter, r *http.Request) {
+		middleware.Chain(true, w, r, middleware.Login)
 	})
 
 	mux.HandleFunc("POST /increment", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Printf("inc")
-		middleware.Chain(w, r, view.Increment)
+		middleware.Chain(true, w, r, view.Increment)
 	})
 
 	mux.HandleFunc("GET /random", func(w http.ResponseWriter, r *http.Request) {
-		middleware.Chain(w, r, func(ctx *middleware.CustomContext, w http.ResponseWriter, r *http.Request) {
+		middleware.Chain(false, w, r, func(ctx *middleware.CustomContext, w http.ResponseWriter, r *http.Request) {
 			random := rand.Int()
 			fmt.Fprintf(w, "Random number: %d", random)
 			w.(http.Flusher).Flush()
@@ -71,7 +52,7 @@ func main() {
 	})
 
 	mux.HandleFunc("GET /events", func(w http.ResponseWriter, r *http.Request) {
-		middleware.Chain(w, r, func(ctx *middleware.CustomContext, w http.ResponseWriter, r *http.Request) {
+		middleware.Chain(true, w, r, func(ctx *middleware.CustomContext, w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", "text/event-stream")
 			w.Header().Set("Connection", "keep-alive")
 			w.Header().Set("HX-Trigger", "event-update")
@@ -80,7 +61,7 @@ func main() {
 			rctx, cancel := context.WithCancel(r.Context())
 			var wg sync.WaitGroup
 
-			// Send data to the stream
+			// Send data to the strream
 			wg.Add(1)
 			go func() {
 				defer wg.Done()
@@ -103,8 +84,19 @@ func main() {
 				defer wg.Done()
 				for {
 					data := <-eventstream
-					if _, err := fmt.Fprintf(w, data); err != nil {
-						cancel()
+
+					select {
+					case <-rctx.Done():
+						return
+
+					case <-r.Context().Done():
+						return
+					default:
+						break
+					}
+
+					_, err := fmt.Fprintf(w, data)
+					if err != nil {
 						return
 					}
 					w.(http.Flusher).Flush() // Ensure the data is sent immediately

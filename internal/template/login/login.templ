@@ -1,7 +1,71 @@
 package login
 
+import "app/internal/template/shared"
+
 templ Login() {
-	<div>
-		<h1>Login</h1>
-	</div>
+	@shared.Base() {
+		<div class="w-screen h-screen flex flex-col items-center bg-[url(/static/png/monstera.png)]">
+			<div class="flex-col pt-[12em] group leading-[4em]">
+				<h1 class="text-cornsilk text-5xl font-display group-hover:text-cornsilk transition-all">basketcase</h1>
+				<div class="bg-cornsilk h-1 scale-x-0 group-hover:scale-100 transition-all rounded-2xl group-hover:bg-cornsilk"></div>
+			</div>
+			<div class="flex flex-1 flex-col justify-start px-6 pt-12 pb-8 lg:px-8">
+				<div class="sm:mx-auto sm:w-full sm:max-w-sm">
+					//<FaCarrot class="mx-auto h-10 w-auto text-cornsilk" />
+					<h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-cornsilk">
+						Sign in to your account
+					</h2>
+				</div>
+				<div class="mt-12 sm:mx-auto sm:w-full sm:max-w-sm">
+					<form class="space-y-6" hx-boost="true" action="/login" method="post">
+						<div>
+							<label htmlFor="email" class="block text-sm font-medium leading-6 text-cornsilk">
+								Email address
+							</label>
+							<div class="mt-2">
+								<input
+									id="email"
+									name="email"
+									type="email"
+									autoComplete="email"
+									required
+									class="w-full outline-earth-yellow transition-all bg-cornsilk rounded-md py-1.5 px-2 text-dark-text shadow-sm sm:text-sm sm:leading-6"
+								/>
+							</div>
+						</div>
+						<div>
+							<div class="flex items-center justify-between">
+								<label htmlFor="password" class="block text-sm font-medium leading-6 text-cornsilk">
+									Password
+								</label>
+								<div class="text-sm hover:scale-[1.05] transition-all">
+									<a href="#" class="font-semibold text-earth-yellow hover:text-earth-yellow">
+										Forgot password?
+									</a>
+								</div>
+							</div>
+							<div class="mt-2">
+								<input
+									id="password"
+									name="password"
+									type="password"
+									autoComplete="current-password"
+									required
+									class="w-full outline-earth-yellow transition-all bg-cornsilk rounded-md py-1.5 px-2 text-dark-text shadow-sm sm:text-sm sm:leading-6"
+								/>
+							</div>
+						</div>
+						<div>
+							<button
+								type="submit"
+								class="flex w-full hover:scale-[1.05] transition-all justify-center rounded-md bg-earth-yellow px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-earth-yellow"
+							>
+								Sign in
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	}
 }

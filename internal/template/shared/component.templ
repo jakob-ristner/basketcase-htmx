@@ -24,11 +24,3 @@ templ Random() {
 		<div hx-get="/random"  hx-trigger="sse:Event"></div>
 	</div>
 }
-
-templ navButton(route string, current string, name string) {
-	if route == current {
-		<button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" >{ name }</button>
-	} else {
-		<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" hx-trigger="click" hx-get={ route } hx-select="#container" hx-target="#container" hx-push-url="true">{ name }</button>
-	}
-}
