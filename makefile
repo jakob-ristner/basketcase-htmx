@@ -13,7 +13,7 @@ css:
 	tailwindcss -i ./static/css/input.css -o ./static/css/output.css
 
 build: 
-	go build
+	go build -o app.exe
 
 run:
 	./app.exe

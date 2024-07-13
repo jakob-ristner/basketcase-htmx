@@ -58,9 +58,12 @@ templ Login() {
 						<div>
 							<button
 								type="submit"
-								class="flex w-full hover:scale-[1.05] transition-all justify-center rounded-md bg-earth-yellow px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-earth-yellow"
+								class="flex items-center w-full min-h-10 hover:scale-[1.05] transition-all justify-center rounded-md bg-earth-yellow px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-earth-yellow"
 							>
-								Sign in
+								<svg class="spinner" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+									<circle cx="50" cy="50" r="45"></circle>
+								</svg>
+								<h1 class="button-text">Sign in</h1>
 							</button>
 						</div>
 					</form>

@@ -31,7 +31,7 @@ func Login(ctx *CustomContext, w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	} else {
-		w.Header().Set("Set-Cookie", fmt.Sprintf("session=%s", session.Token))
+		w.Header().Set("Set-Cookie", fmt.Sprintf("session=%s; HttpOnly; SameSite=Lax", session.Token))
 		w.Header().Set("HX-Redirect", "/")
 		w.WriteHeader(http.StatusOK)
 	}

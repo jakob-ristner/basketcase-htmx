@@ -13,6 +13,7 @@ import (
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
 	"github.com/uptrace/bun/driver/pgdriver"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type Notification struct {
@@ -34,6 +35,11 @@ func GetInstance() *DbHandler {
 		Instance = new()
 	})
 	return Instance
+}
+
+func checkPasswordHash(password, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	return err == nil
 }
 
 func new() *DbHandler {
@@ -119,7 +125,7 @@ func (db *DbHandler) AttemptLogin(email string, password string) (*UserSession, 
 		return nil, err
 	}
 
-	if user.Password != password {
+	if !checkPasswordHash(password, user.Password) {
 		return nil, fmt.Errorf("invalid password")
 	}
 
