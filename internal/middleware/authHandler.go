@@ -22,17 +22,17 @@ func Auth(ctx *CustomContext, w http.ResponseWriter, r *http.Request) error {
 	return nil
 }
 
-func Login(ctx *CustomContext, w http.ResponseWriter, r *http.Request) {
+func Login(ctx *CustomContext, w http.ResponseWriter, r *http.Request) error {
 	r.ParseForm()
 	email := r.Form.Get("email")
 	password := r.Form.Get("password")
 	session, err := dbHandler.GetInstance().AttemptLogin(email, password)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
-		return
+		return err
 	} else {
 		w.Header().Set("Set-Cookie", fmt.Sprintf("session=%s; HttpOnly; SameSite=Lax", session.Token))
 		w.Header().Set("HX-Redirect", "/")
-		w.WriteHeader(http.StatusOK)
 	}
+	return nil
 }

@@ -1,0 +1,9 @@
+<html><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><script src=\"https://unpkg.com/htmx.org@1.9.11\"></script><script src=\"https://unpkg.com/htmx.org/dist/ext/sse.js\"></script><link rel=\"stylesheet\" href=\"/static/css/output.css\"></head><body><main id=\"container\" class=\"flex flex-col w-screen h-screen bg-white \">
+</main></body></html>
+<div class=\"flex justify-between p-6\">
+</div>
+<button class=\"bg-red-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded\">
+</button>
+<button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\" hx-trigger=\"click\" hx-get=\"
+\" hx-select=\"#container\" hx-target=\"#container\" hx-push-url=\"true\">
+</button>

@@ -9,3 +9,7 @@ import (
 func Login(ctx *middleware.CustomContext, w http.ResponseWriter, r *http.Request) {
 	login.Login().Render(ctx, w)
 }
+
+func LoginCheckMark(ctx *middleware.CustomContext, w http.ResponseWriter, r *http.Request) {
+	login.CheckMark().Render(ctx, w)
+}

@@ -35,7 +35,7 @@ func main() {
 	})
 
 	mux.HandleFunc("POST /login", func(w http.ResponseWriter, r *http.Request) {
-		middleware.Chain(true, w, r, middleware.Login)
+		middleware.Chain(true, w, r, view.LoginCheckMark, middleware.Login)
 	})
 
 	mux.HandleFunc("POST /increment", func(w http.ResponseWriter, r *http.Request) {

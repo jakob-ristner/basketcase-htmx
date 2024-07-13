@@ -23,7 +23,7 @@ module.exports = {
     fontFamily: {
       //'sans': ['ui-sans-serif', 'system-ui'],
       //'serif': ['Playfair Display'],
-      //'mono': ['ui-monospace', 'SFMono-Regular'],
+      'mono': ['Consolas'],
       'display': ['Playfair Display'],
       //'body': ['"Open Sans"'],
     },
@@ -37,5 +37,13 @@ module.exports = {
       '5xl': '5rem',
     },
   },
-  plugins: [],
+  plugins: [
+    require("@catppuccin/tailwindcss")({
+      // prefix to use, e.g. `text-pink` becomes `text-ctp-pink`.
+      // default is `false`, which means no prefix
+      prefix: "ctp",
+      // which flavour of colours to use by default, in the `:root`
+      defaultFlavour: "latte",
+    }),
+  ],
 }
