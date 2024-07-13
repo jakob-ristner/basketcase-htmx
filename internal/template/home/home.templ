@@ -1,0 +1,14 @@
+package template
+
+import "app/internal/database"
+
+import shared "app/internal/template/shared"
+
+templ Home(user *dbHandler.User) {
+	@shared.Base() {
+		<div>
+			<h1>Hello {user.Name}</h1>
+		</div>
+	}
+}
+

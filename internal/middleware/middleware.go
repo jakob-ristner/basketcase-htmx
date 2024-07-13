@@ -1,52 +1,70 @@
 package middleware
 
 import (
+	dbHandler "app/internal/database"
 	"context"
 	"fmt"
 	"net/http"
 	"time"
 )
 
-type CustomContext struct {
-	context.Context
-	token     string
-	StartTime time.Time
-}
+type key int
 
-type CustomHandler func(ctx *CustomContext, w http.ResponseWriter, r *http.Request)
-type CustomMiddleware func(ctx *CustomContext, w http.ResponseWriter, r *http.Request) error
+//const timeKeyContext key = iota
 
-func Chain(log bool, w http.ResponseWriter, r *http.Request, handler CustomHandler, middleware ...CustomMiddleware) {
-	customContext := &CustomContext{
-		Context:   context.Background(),
-		StartTime: time.Now(),
-	}
-	for _, mw := range middleware {
-		err := mw(customContext, w, r)
-		if err != nil {
-			return
+const (
+	timeKeyContext key = iota
+	UserKeyContext
+)
+
+func Stack(handlers ...http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		ctx := context.WithValue(r.Context(), timeKeyContext, time.Now())
+		r = r.WithContext(ctx)
+		for _, handler := range handlers {
+			handler.ServeHTTP(w, r)
+			if r.Context().Err() != nil {
+				return
+			}
 		}
 	}
-	handler(customContext, w, r)
-
-	if log {
-		Log(customContext, w, r)
-	}
 }
 
-func Log(ctx *CustomContext, w http.ResponseWriter, r *http.Request) error {
-	elapsedTime := time.Since(ctx.StartTime)
+func AuthenticateSession(w http.ResponseWriter, r *http.Request) {
+	token, err := r.Cookie("token")
+
+	ctx, cancel := context.WithCancel(r.Context())
+	cancel()
+
+	if err != nil {
+		*r = *r.WithContext(ctx)
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
+	}
+	session, err := dbHandler.GetInstance().GetSession(token.Value)
+	if err != nil {
+		*r = *r.WithContext(ctx)
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
+	}
+
+	user, err := dbHandler.GetInstance().GetUserById(session.UserId)
+	if err != nil {
+		*r = *r.WithContext(ctx)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	ctx = context.WithValue(r.Context(), UserKeyContext, user)
+	*r = *r.WithContext(ctx)
+}
+
+func Log(w http.ResponseWriter, r *http.Request) {
+	startTime, ok := r.Context().Value(timeKeyContext).(time.Time)
+	if !ok {
+		return
+	}
+	elapsedTime := time.Since(startTime)
 	formattedTime := time.Now().Format("2006-01-02 15:04:05")
 	fmt.Printf("[%s] [%s] [%s] [%s]\n", formattedTime, r.Method, r.URL.Path, elapsedTime)
-	return nil
-}
-
-func ParseForm(ctx *CustomContext, w http.ResponseWriter, r *http.Request) error {
-	r.ParseForm()
-	return nil
-}
-
-func ParseMultipartForm(ctx *CustomContext, w http.ResponseWriter, r *http.Request) error {
-	r.ParseMultipartForm(10 << 20)
-	return nil
 }
