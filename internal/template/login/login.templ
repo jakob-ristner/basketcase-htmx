@@ -8,6 +8,39 @@ templ CheckMark() {
 	</svg>
 }
 
+templ IncorrectLoginPwContainer() {
+	<div class="mt-2" id="password-container">
+		<input
+			id="password"
+			name="password"
+			type="password"
+			autoComplete="current-password"
+			placeholder=""
+			required
+			class="w-full placeholder-shown:ring-2 bg-ctp-crust ring-ctp-red peer outline-ctp-lavender transition-all placeholder-shown:bg-ctp-rosewater focus:bg-ctp-crust rounded-md py-1.5 px-2 text-ctp-text shadow-sm sm:text-sm sm:leading-6"
+		/>
+		<h1 class="block text-sm leading-6 text-ctp-red font-mono font-semibold invisible peer-placeholder-shown:visible peer-focus:invisible">
+			Incorrect
+		</h1>
+	</div>
+}
+
+templ LoginPwContainer() {
+	<div class="mt-2" id="password-container">
+		<input
+			id="password"
+			name="password"
+			type="password"
+			autoComplete="current-password"
+			required
+			class="w-full outline-ctp-lavender transition-all bg-ctp-crust rounded-md py-1.5 px-2 text-ctp-text shadow-sm sm:text-sm sm:leading-6"
+		/>
+		<h1 class="block text-sm leading-6 font-mono font-semibold invisible">
+			x
+		</h1>
+	</div>
+}
+
 templ Login() {
 	@shared.Base() {
 		<div class="w-screen h-screen flex flex-col items-center bg-ctp-base">
@@ -50,18 +83,10 @@ templ Login() {
 									</a>
 								</div>
 							</div>
-							<div class="mt-2">
-								<input
-									id="password"
-									name="password"
-									type="password"
-									autoComplete="current-password"
-									required
-									class="w-full outline-ctp-lavender transition-all bg-ctp-crust rounded-md py-1.5 px-2 text-ctp-text shadow-sm sm:text-sm sm:leading-6"
-								/>
-							</div>
+							//@IncorrectLoginPwContainer()
+							@LoginPwContainer()
 						</div>
-						<div>
+						<div id="loginbutton">
 							<button
 								type="submit"
 								class="flex items-center w-full min-h-10 hover:scale-[1.05] transition-all justify-center rounded-md bg-ctp-blue px-3 py-1.5 text-sm font-semibold leading-6 text-ctp-base shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-earth-yellow"
