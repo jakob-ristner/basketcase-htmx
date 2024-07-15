@@ -51,7 +51,7 @@ templ Login() {
 						</h2>
 					</div>
 					<div>
-						<form hx-boost="true" action="/login" method="post" hx-target="button">
+						<form hx-boost="true" action="/login" method="post" hx-target="button" onSubmit="document.activeElement.blur();">
 							<div>
 								<label htmlFor="email">
 									Email address

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"app/internal/database"
 	"app/internal/handlers"
 	"app/internal/middleware"
 	"fmt"
@@ -15,6 +16,8 @@ func main() {
 	_ = godotenv.Load()
 	mux := http.NewServeMux()
 
+	database := database.CreateConn()
+
 	mux.HandleFunc("GET /favicon.ico", middleware.Stack(
 		handlers.ServeFavicon))
 
@@ -22,7 +25,7 @@ func main() {
 		handlers.ServeStaticFiles))
 
 	mux.HandleFunc("GET /", middleware.Stack(
-		middleware.AuthenticateSession,
+		middleware.AuthenticateSession(database),
 		handlers.GetHome,
 		middleware.Log,
 	))
@@ -33,7 +36,7 @@ func main() {
 	))
 
 	mux.HandleFunc("POST /login", middleware.Stack(
-		handlers.PostLogin,
+		handlers.PostLogin(database),
 		middleware.Log,
 	))
 

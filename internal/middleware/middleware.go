@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	dbHandler "app/internal/database"
+	"app/internal/database"
 	"context"
 	"fmt"
 	"net/http"
@@ -30,33 +30,37 @@ func Stack(handlers ...http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
-func AuthenticateSession(w http.ResponseWriter, r *http.Request) {
-	token, err := r.Cookie("token")
+func AuthenticateSession(conn database.Connection) http.HandlerFunc {
 
-	ctx, cancel := context.WithCancel(r.Context())
-	cancel()
+	return func(w http.ResponseWriter, r *http.Request) {
 
-	if err != nil {
+		token, err := r.Cookie("token")
+
+		ctx, cancel := context.WithCancel(r.Context())
+		cancel()
+
+		if err != nil {
+			*r = *r.WithContext(ctx)
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
+			return
+		}
+		session, err := conn.GetSessionByToken(token.Value)
+		if err != nil {
+			*r = *r.WithContext(ctx)
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
+			return
+		}
+
+		user, err := conn.GetUserById(session.UserId)
+		if err != nil {
+			*r = *r.WithContext(ctx)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		ctx = context.WithValue(r.Context(), UserKeyContext, user)
 		*r = *r.WithContext(ctx)
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
-		return
 	}
-	session, err := dbHandler.GetInstance().GetSession(token.Value)
-	if err != nil {
-		*r = *r.WithContext(ctx)
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
-		return
-	}
-
-	user, err := dbHandler.GetInstance().GetUserById(session.UserId)
-	if err != nil {
-		*r = *r.WithContext(ctx)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-
-	ctx = context.WithValue(r.Context(), UserKeyContext, user)
-	*r = *r.WithContext(ctx)
 }
 
 func Log(w http.ResponseWriter, r *http.Request) {
