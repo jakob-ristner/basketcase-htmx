@@ -47,61 +47,63 @@ templ LoginPwContainer() {
 
 templ Login() {
 	@shared.Base() {
-		<div class="w-screen h-screen flex flex-col items-center bg-ctp-base">
-			<div class="flex-col pt-[12em] group leading-[4em]">
-				<h1 class="text-ctp-text text-5xl font-display transition-all">basketcase</h1>
-				<div class="bg-ctp-text h-1 scale-x-0 group-hover:scale-100 transition-all rounded-2xl group-hover:bg-ctp-text"></div>
-			</div>
-			<div class="flex flex-1 flex-col justify-start px-6 pt-12 pb-8 lg:px-8">
-				<div class="sm:mx-auto sm:w-full sm:max-w-sm">
-					<link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet"/>
-					<h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-ctp-subtext1">
-						Sign in to your account
-					</h2>
+		<div class="w-screen h-screen bg-ctp-base flex items-center justify-center">
+			<div class="flex flex-col items-center">
+				<div class="flex-col group leading-[4em]">
+					<h1 class="text-ctp-text text-5xl font-display transition-all">basketcase</h1>
+					<div class="bg-ctp-text h-1 scale-x-0 group-hover:scale-100 transition-all rounded-2xl group-hover:bg-ctp-text"></div>
 				</div>
-				<div class="mt-12 sm:mx-auto sm:w-full sm:max-w-sm">
-					<form class="space-y-6" hx-boost="true" action="/login" method="post" hx-target="button">
-						<div>
-							<label htmlFor="email" class="block text-sm leading-6 text-ctp-subtext0 font-mono font-semibold">
-								Email address
-							</label>
-							<div class="mt-2">
-								<input
-									id="email"
-									name="email"
-									type="email"
-									autoComplete="email"
-									required
-									class="w-full outline-ctp-lavender transition-all bg-ctp-crust rounded-md py-1.5 px-2 text-ctp-text shadow-sm sm:text-sm sm:leading-6"
-								/>
-							</div>
-						</div>
-						<div>
-							<div class="flex items-center justify-between">
-								<label htmlFor="password" class="block text-sm leading-6 text-ctp-subtext0 font-mono font-semibold">
-									Password
+				<div class="flex flex-1 flex-col px-6 pt-12 lg:px-8">
+					<div class="sm:mx-auto sm:w-full sm:max-w-sm">
+						<link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet"/>
+						<h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-ctp-subtext1">
+							Sign in to your account
+						</h2>
+					</div>
+					<div class="mt-12 sm:mx-auto sm:w-full sm:max-w-sm">
+						<form class="space-y-6" hx-boost="true" action="/login" method="post" hx-target="button">
+							<div>
+								<label htmlFor="email" class="block text-sm leading-6 text-ctp-subtext0 font-mono font-semibold">
+									Email address
 								</label>
-								<div class="text-sm hover:scale-[1.05] transition-all">
-									<a href="#" class="font-semibold text-ctp-blue">
-										Forgot password?
-									</a>
+								<div class="mt-2">
+									<input
+										id="email"
+										name="email"
+										type="email"
+										autoComplete="email"
+										required
+										class="w-full outline-ctp-lavender transition-all bg-ctp-crust rounded-md py-1.5 px-2 text-ctp-text shadow-sm sm:text-sm sm:leading-6"
+									/>
 								</div>
 							</div>
-							@IncorrectLoginPwContainer()
-							//@LoginPwContainer()
-						</div>
-						<div id="loginbutton">
-							<button
-								type="submit"
-								class="flex items-center w-full min-h-10 hover:scale-[1.05] transition-all justify-center rounded-md bg-ctp-blue px-3 py-1.5 text-sm font-semibold leading-6 text-ctp-base shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-earth-yellow"
-							>
-								<svg class="spinner" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-									<circle cx="50" cy="50" r="45"></circle>
-								</svg>
-								<h1 class="button-text">Sign in</h1>
-							</button>
-						</div>
-					</form>
+							<div>
+								<div class="flex items-center justify-between">
+									<label htmlFor="password" class="block text-sm leading-6 text-ctp-subtext0 font-mono font-semibold">
+										Password
+									</label>
+									<div class="text-sm hover:scale-[1.05] transition-all">
+										<a href="#" class="font-semibold text-ctp-blue">
+											Forgot password?
+										</a>
+									</div>
+								</div>
+								//@IncorrectLoginPwContainer()
+								@LoginPwContainer()
+							</div>
+							<div id="loginbutton">
+								<button
+									type="submit"
+									class="flex items-center w-full min-h-10 hover:scale-[1.05] transition-all justify-center rounded-md bg-ctp-blue px-3 py-1.5 text-sm font-semibold leading-6 text-ctp-base shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-earth-yellow"
+								>
+									<svg class="spinner" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+										<circle cx="50" cy="50" r="45"></circle>
+									</svg>
+									<h1 class="button-text">Sign in</h1>
+								</button>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
