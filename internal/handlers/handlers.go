@@ -64,6 +64,6 @@ func PostLogin(w http.ResponseWriter, r *http.Request) {
 	} else {
 		w.Header().Set("Set-Cookie", fmt.Sprintf("token=%s; HttpOnly; SameSite=Lax", session.Token))
 		w.Header().Set("HX-Redirect", "/")
-		login.CheckMark().Render(r.Context(), w)
+		w.WriteHeader(http.StatusOK)
 	}
 }
