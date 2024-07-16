@@ -1,0 +1,23 @@
+package login2
+
+import "app/internal/template/shared"
+
+templ Login() {
+	@shared.Base() {
+		<link rel="stylesheet" href="/static/css/login2/style.css"/>
+		<form class="content" hx-boost="true" hx-post="#">
+			<h1>Sign in to your account</h1>
+			<input
+				placeholder=""
+				name="email"
+				type="email"
+				autoComplete="email"
+				required
+			/>
+			<input class="error" type="password" placeholder=""/>
+			<button type="submit">
+				Sign In
+			</button>
+		</form>
+	}
+}

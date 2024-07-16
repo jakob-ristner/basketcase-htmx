@@ -71,20 +71,3 @@ func (db *bunWrapper) InsertUserSession(session *UserSession) error {
 	_, err := db.conn.NewInsert().Model(session).Exec(context.Background())
 	return err
 }
-
-type User struct {
-	bun.BaseModel `bun:"users"`
-	ID            int
-	Date          time.Time
-	Name          string
-	Email         string
-	Password      string
-	Admin         bool
-}
-
-type UserSession struct {
-	bun.BaseModel `bun:"usersessions"`
-	UserId        int
-	Token         string
-	Expires       time.Time
-}

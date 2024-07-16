@@ -45,7 +45,7 @@ func AuthenticateSession(conn database.Connection) http.HandlerFunc {
 			return
 		}
 		session, err := conn.GetSessionByToken(token.Value)
-		if err != nil {
+		if err != nil || session.Expires.Before(time.Now()) {
 			*r = *r.WithContext(ctx)
 			http.Redirect(w, r, "/login", http.StatusSeeOther)
 			return

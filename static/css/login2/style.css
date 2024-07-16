@@ -1,0 +1,124 @@
+@import url('https://unpkg.com/@catppuccin/palette/css/catppuccin.css');
+
+:root {
+    --app-box-shadow-offset: 4px;
+    --app-box-shadow-blur: 10px;
+    --app-box-shadow-spread: -6px;
+    --app-transition-quick: 0.08s;
+    --app-border-radius-md: 0.5rem;
+    --app-box-shadow-col: var(--ctp-text);
+}
+
+
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 1.2em;
+    letter-spacing: -1px;
+    color: var(--ctp-text);
+}
+
+body {
+    background-color: var(--ctp-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.content {
+    background-color: var(--ctp-crust);
+    padding: 2em;
+    display: flex;
+    gap: 2em;
+    align-items: center;
+    border-radius: var(--app-border-radius-md);
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: var(--app-box-shadow-offset) var(--app-box-shadow-offset) var(--app-box-shadow-blur) var(--app-box-shadow-spread) var(--app-box-shadow-col);
+}
+
+
+input {
+    width: 15em;
+    height: 2.5em;
+    padding-left: 1em;
+    box-sizing: border-box;
+    border-radius: var(--app-border-radius-md);
+    border: none;
+    outline: none;
+    box-shadow: var(--app-box-shadow-offset) var(--app-box-shadow-offset) var(--app-box-shadow-blur) var(--app-box-shadow-spread) var(--app-box-shadow-col);
+    background-color: var(--ctp-surface0);
+    color: var(--ctp-text);
+
+    transition: all var(--app-transition-quick);
+
+    &:focus {
+        background-color: var(--ctp-surface0) !important;
+        --app-box-shadow-col: var(--ctp-lavender) !important;
+        --app-box-shadow: var(--app-box-shadow-offset) var(--app-box-shadow-offset) var(--app-box-shadow-blur) var(--app-box-shadow-spread) var(--app-box-shadow-col) !important;
+    }
+}
+
+input.error:placeholder-shown {
+    background-color: hsl(from var(--ctp-red) h s l / 70%);
+    --app-box-shadow-col: var(--ctp-red);
+    --app-box-shadow: var(--app-box-shadow-offset) var(--app-box-shadow-offset) var(--app-box-shadow-blur) var(--app-box-shadow-spread) var(--app-box-shadow-col);
+
+}
+
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: var(--ctp-text);
+    transition: background-color 5000s ease-in-out 0s;
+    --app-box-shadow-col: var(--ctp-lavender) !important;
+    box-shadow: inset 0 0 20px 20px var(--ctp-surface0), var(--app-box-shadow-offset) var(--app-box-shadow-offset) var(--app-box-shadow-blur) var(--app-box-shadow-spread) var(--app-box-shadow-col);
+}
+
+input:-webkit-autofill {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: var(--ctp-text);
+    box-shadow: inset 0 0 20px 20px var(--ctp-surface0), var(--app-box-shadow-offset) var(--app-box-shadow-offset) var(--app-box-shadow-blur) var(--app-box-shadow-spread) var(--app-box-shadow-col);
+}
+
+svg {
+    width: 20px;
+    fill: none;
+    stroke: var(--ctp-base);
+    box-sizing: border-box;
+    stroke-width: 5px;
+}
+
+button {
+    background-color: var(--ctp-blue);
+    width: 15em;
+    padding: 0em;
+    height: 3em;
+    font-family: Consolas;
+    letter-spacing: 0.02em;
+    border-radius: var(--app-border-radius-md);
+    border: none;
+    outline: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--app-box-shadow-offset) var(--app-box-shadow-offset) var(--app-box-shadow-blur) var(--app-box-shadow-spread) var(--app-box-shadow-col);
+    transition: transform var(--app-transition-quick), box-shadow var(--app-transition-quick), background-color var(--app-transition-quick);
+    color: var(--ctp-base);
+
+
+    &:hover,
+    &:active,
+    &:focus-visible {
+        background-color: hsl(from var(--ctp-blue) h s calc(l * 1.1));
+    }
+
+    &:active {
+        transform: translateY(var(--app-box-shadow-offset)) translateX(var(--app-box-shadow-offset));
+        box-shadow: 0px 0px 0px 0px var(--ctp-text);
+    }
+
+
+}
