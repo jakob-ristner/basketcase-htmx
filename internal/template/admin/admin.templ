@@ -1,0 +1,17 @@
+package admin
+
+import (
+	"app/internal/database"
+	"app/internal/template/navbar"
+	"app/internal/template/shared"
+	"app/internal/template/navbar"
+)
+
+templ Admin(user *database.User) {
+	@shared.Base() {
+		@navbar.NavBar(navbar.AdminId, user.Admin)
+		<div>
+			<h1>This is the ADMIN page</h1>
+		</div>
+	}
+}

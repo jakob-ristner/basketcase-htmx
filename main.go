@@ -26,7 +26,26 @@ func main() {
 
 	mux.HandleFunc("GET /", middleware.Stack(
 		middleware.AuthenticateSession(database),
-		handlers.GetHome,
+		handlers.GetLists,
+		middleware.Log,
+	))
+
+	mux.HandleFunc("GET /recipes", middleware.Stack(
+		middleware.AuthenticateSession(database),
+		handlers.GetRecipes,
+		middleware.Log,
+	))
+
+	mux.HandleFunc("GET /ingredients", middleware.Stack(
+		middleware.AuthenticateSession(database),
+		handlers.GetIngredients,
+		middleware.Log,
+	))
+
+	mux.HandleFunc("GET /admin", middleware.Stack(
+		middleware.AuthenticateSession(database),
+		middleware.EnsureAdmin,
+		handlers.GetAdmin,
 		middleware.Log,
 	))
 
@@ -42,6 +61,12 @@ func main() {
 
 	mux.HandleFunc("POST /login", middleware.Stack(
 		handlers.PostLogin(database),
+		middleware.Log,
+	))
+
+	mux.HandleFunc("GET /navigate", middleware.Stack(
+		middleware.AuthenticateSession(database),
+		handlers.GetNav,
 		middleware.Log,
 	))
 

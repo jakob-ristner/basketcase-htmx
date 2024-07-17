@@ -23,12 +23,14 @@ body {
     line-height: 2rem;
     display: inline;
     color: var(--ctp-text);
-    font-size: 4rem;
+    font-size: 3rem;
     font-family: Playfair Display;
     font-weight: 300;
     /* font-family: "Times New Roman", Times, serif; */
     /* font-family: 'Courier New', Courier, monospace; */
 }
+
+
 
 .title-underline {
     background: var(--ctp-text);

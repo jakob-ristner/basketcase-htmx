@@ -1,0 +1,11 @@
+<link rel=\"stylesheet\" href=\"/static/css/navbar/navbar.css\"><div class=\"navbar\"><form hx-boost=\"true\" hx-get=\"/navigate\" hx-trigger=\"change\" hx-target=\".navbar + div\" hx-select=\".navbar + div\" hx-swap=\"outerHTML\"><input type=\"radio\" id=\"lists\" name=\"route\" value=\"lists\"
+ checked
+> <label for=\"lists\"><span>Lists</span></label> <input type=\"radio\" id=\"recipes\" name=\"route\" value=\"recipes\"
+ checked
+> <label for=\"recipes\"><span>Recipes</span></label> <input type=\"radio\" id=\"ingredients\" name=\"route\" value=\"ingredients\"
+ checked
+> <label for=\"ingredients\"><span>Ingredients</span></label> 
+<input type=\"radio\" id=\"admin\" name=\"route\" value=\"admin\"
+ checked
+> <label for=\"admin\"><span>Admin</span></label>
+</form></div>

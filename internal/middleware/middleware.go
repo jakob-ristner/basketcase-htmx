@@ -72,3 +72,19 @@ func Log(w http.ResponseWriter, r *http.Request) {
 	formattedTime := time.Now().Format("2006-01-02 15:04:05")
 	fmt.Printf("[%s] [%s] [%s] [%s]\n", formattedTime, r.Method, r.URL.Path, elapsedTime)
 }
+
+func EnsureAdmin(w http.ResponseWriter, r *http.Request) {
+	user, ok := r.Context().Value(UserKeyContext).(*database.User)
+	ctx, cancel := context.WithCancel(r.Context())
+	cancel()
+	if !ok {
+		*r = *r.WithContext(ctx)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	if !user.Admin {
+		*r = *r.WithContext(ctx)
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+}

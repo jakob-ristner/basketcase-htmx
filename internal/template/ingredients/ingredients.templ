@@ -1,0 +1,17 @@
+package ingredients
+
+import (
+	"app/internal/database"
+	"app/internal/template/navbar"
+	"app/internal/template/shared"
+	"app/internal/template/navbar"
+)
+
+templ Ingredients(user *database.User) {
+	@shared.Base() {
+		@navbar.NavBar(navbar.IngredientsId, user.Admin)
+		<div>
+			<h1>This is the ingredients page</h1>
+		</div>
+	}
+}

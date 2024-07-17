@@ -1,0 +1,131 @@
+.navbar {
+    --_nav-shadow-offset: 1px;
+    --_nav-shadow-blur: 5px;
+    --nav_shadow_spread: -4px;
+    --_nav_shadow_color: var(--ctp-text);
+    --_nav-bg: var(--ctp-mantle);
+    --_nav-text: var(--ctp-text);
+
+    background-color: var(--_nav-bg);
+    overflow: hidden;
+    width: 100%;
+    box-shadow: 0 var(--_nav-shadow-offset) var(--_nav-shadow-blur) var(--nav_shadow_spread) var(--_nav_shadow_color);
+
+    color: var(--_nav-text);
+
+    display: flex;
+
+
+    height: 3rem;
+}
+
+form {
+    margin: 0;
+    height: 100%;
+    background-color: var(--_nav-bg);
+    width: 35%;
+
+    position: relative;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+
+    &:has(input:nth-child(3):checked)::after {
+        margin-left: 33.33333%;
+    }
+
+    &:has(input:nth-child(5):checked)::after {
+        margin-left: 66.33333%;
+    }
+
+    &::after {
+        content: "";
+        width: 33.33333%;
+        height: 100%;
+        z-index: 1;
+        position: absolute;
+        left: 0;
+        transition:
+            margin-left 0.08s,
+            background-color 0.08s;
+        bottom: 0;
+    }
+
+
+    &:has(input[value="admin"]) {
+
+        &::after {
+            width: 25%;
+        }
+        
+
+        &:has(input:nth-child(3):checked)::after {
+            margin-left: 25%;
+        }
+
+        &:has(input:nth-child(5):checked)::after {
+            margin-left: 50%;
+        }
+
+        &:has(input:nth-child(7):checked)::after {
+            margin-left: 75%;
+        }
+    }
+
+
+
+    &:has(:checked+label[for="lists"])::after {
+        --_list-bg: var(--ctp-blue);
+        background-color: hsl(from var(--_list-bg) h s l / 40%);
+    }
+
+    &:has(:checked+label[for="recipes"])::after {
+        --_recipe-bg: var(--ctp-pink);
+        background-color: hsl(from var(--_recipe-bg) h s l / 40%);
+    }
+
+    &:has(:checked+label[for="ingredients"])::after {
+        --_ingredient-bg: var(--ctp-green);
+        background-color: hsl(from var(--_ingredient-bg) h s l / 40%);
+    }
+
+    &:has(:checked+label[for="admin"])::after {
+        --_admin-bg: var(--ctp-yellow);
+        background-color: hsl(from var(--_admin-bg) h s l / 40%);
+    }
+
+    & input {
+        display: none;
+
+        &+label {
+            height: 100%;
+            display: flex;
+
+            flex: 1;
+
+            font-weight: 600;
+
+            transition: background-color 0.08s;
+
+            &:hover,
+            &:focus,
+            &:focus-visible {
+                background-color: var(--ctp-crust);
+                cursor: pointer;
+
+            }
+
+            & span {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex: 1;
+                z-index: 3;
+            }
+        }
+    }
+
+}

@@ -78,3 +78,9 @@
   --ctp-crust-rgb: 220 224 232;
   --ctp-crust-hsl: 220.000 20.690% 88.627%;
 }
+
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}

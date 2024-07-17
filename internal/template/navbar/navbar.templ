@@ -1,0 +1,19 @@
+package navbar
+
+templ NavBar(route RouteId, admin bool) {
+	<link rel="stylesheet" href="/static/css/navbar/navbar.css"/>
+	<div class="navbar">
+		<form hx-boost="true" hx-get="/navigate" hx-trigger="change" hx-target=".navbar + div" hx-select=".navbar + div" hx-swap="outerHTML">
+			<input type="radio" id="lists" name="route" value="lists" checked?={ route == ListsId }/>
+			<label for="lists"><span>Lists</span></label>
+			<input type="radio" id="recipes" name="route" value="recipes" checked?={ route == RecipesId }/>
+			<label for="recipes"><span>Recipes</span></label>
+			<input type="radio" id="ingredients" name="route" value="ingredients" checked?={ route == IngredientsId }/>
+			<label for="ingredients"><span>Ingredients</span></label>
+			if admin {
+				<input type="radio" id="admin" name="route" value="admin" checked?={ route == AdminId }/>
+				<label for="admin"><span>Admin</span></label>
+			}
+		</form>
+	</div>
+}

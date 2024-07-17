@@ -11,12 +11,15 @@
 
 
 h1 {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    font-size: 1.2em;
-    letter-spacing: -1px;
+    line-height: 1rem;
+    display: inline;
+    display: inline;
     color: var(--ctp-text);
+    font-size: 5rem;
+    font-family: Playfair Display;
+    font-weight: 300;
 }
+
 
 body {
     background-color: var(--ctp-base);
@@ -26,11 +29,12 @@ body {
 }
 
 
-.content {
+form {
     background-color: var(--ctp-crust);
-    padding: 2em;
+    padding: 3rem;
+    padding-top: 1rem;
+    gap: 2rem;
     display: flex;
-    gap: 2em;
     align-items: center;
     border-radius: var(--app-border-radius-md);
     justify-content: center;
@@ -38,11 +42,18 @@ body {
     box-shadow: var(--app-box-shadow-offset) var(--app-box-shadow-offset) var(--app-box-shadow-blur) var(--app-box-shadow-spread) var(--app-box-shadow-col);
 }
 
+.content {
+    width: 92%;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
 
 input {
-    width: 15em;
-    height: 2.5em;
-    padding-left: 1em;
+    width: 100%;
+    height: 2.4rem;
+    padding-left: 1rem;
     box-sizing: border-box;
     border-radius: var(--app-border-radius-md);
     border: none;
@@ -60,10 +71,31 @@ input {
     }
 }
 
-input.error:placeholder-shown {
-    background-color: hsl(from var(--ctp-red) h s l / 70%);
-    --app-box-shadow-col: var(--ctp-red);
-    --app-box-shadow: var(--app-box-shadow-offset) var(--app-box-shadow-offset) var(--app-box-shadow-blur) var(--app-box-shadow-spread) var(--app-box-shadow-col);
+input.error {
+    animation: horizontal-shaking 0.3s linear 1;
+
+    &:placeholder-shown {
+        background-color: hsl(from var(--ctp-red) h s l / 70%);
+        --app-box-shadow-col: var(--ctp-red);
+        --app-box-shadow: var(--app-box-shadow-offset) var(--app-box-shadow-offset) var(--app-box-shadow-blur) var(--app-box-shadow-spread) var(--app-box-shadow-col);
+
+    }
+}
+
+
+label {
+    align-self: flex-start;
+    margin-bottom: -2.8rem;
+    font-size: 0.8rem;
+    line-height: 0.8rem;
+    color: var(--ctp-subtext0);
+    font-weight: 600;
+    font-family: Consolas;
+    transition: color var(--app-transition-quick);
+
+    &:has(+input:focus) {
+        color: var(--ctp-lavender);
+    }
 
 }
 
@@ -82,17 +114,9 @@ input:-webkit-autofill {
     box-shadow: inset 0 0 20px 20px var(--ctp-surface0), var(--app-box-shadow-offset) var(--app-box-shadow-offset) var(--app-box-shadow-blur) var(--app-box-shadow-spread) var(--app-box-shadow-col);
 }
 
-svg {
-    width: 20px;
-    fill: none;
-    stroke: var(--ctp-base);
-    box-sizing: border-box;
-    stroke-width: 5px;
-}
-
 button {
     background-color: var(--ctp-blue);
-    width: 15em;
+    width: 100%;
     padding: 0em;
     height: 3em;
     font-family: Consolas;
@@ -101,6 +125,9 @@ button {
     border: none;
     outline: none;
     font-weight: 600;
+    font-size: 1.2rem;
+    height: 3rem;
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -108,6 +135,9 @@ button {
     transition: transform var(--app-transition-quick), box-shadow var(--app-transition-quick), background-color var(--app-transition-quick);
     color: var(--ctp-base);
 
+    .htmx-request & {
+        font-size: 0;
+    }
 
     &:hover,
     &:active,
@@ -121,4 +151,79 @@ button {
     }
 
 
+}
+
+@keyframes horizontal-shaking {
+    0% {
+        transform: translateX(0)
+    }
+
+    25% {
+        transform: translateX(5px)
+    }
+
+    50% {
+        transform: translateX(-5px)
+    }
+
+    75% {
+        transform: translateX(5px)
+    }
+
+    100% {
+        transform: translateX(0)
+    }
+}
+
+button>svg {
+    animation: 2s linear infinite svg-animation;
+    max-width: 20px;
+    display: none;
+
+    .htmx-request & {
+        display: block;
+    }
+}
+
+@keyframes svg-animation {
+    0% {
+        transform: rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateZ(360deg)
+    }
+}
+
+circle {
+    animation: 1.4s ease-in-out infinite both circle-animation;
+    display: block;
+    fill: transparent;
+    stroke: var(--ctp-base);
+    stroke-linecap: round;
+    stroke-dasharray: 283;
+    stroke-dashoffset: 280;
+    stroke-width: 10px;
+    transform-origin: 50% 50%;
+}
+
+
+@keyframes circle-animation {
+
+    0%,
+    25% {
+        stroke-dashoffset: 280;
+        transform: rotate(0);
+    }
+
+    50%,
+    75% {
+        stroke-dashoffset: 75;
+        transform: rotate(45deg);
+    }
+
+    100% {
+        stroke-dashoffset: 280;
+        transform: rotate(360deg);
+    }
 }

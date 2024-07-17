@@ -1,0 +1,16 @@
+package lists
+
+import (
+	"app/internal/database"
+	"app/internal/template/navbar"
+	"app/internal/template/shared"
+)
+
+templ Lists(user *database.User) {
+	@shared.Base() {
+		@navbar.NavBar(navbar.ListsId, user.Admin)
+		<div>
+			<h1>This is the lists page</h1>
+		</div>
+	}
+}
