@@ -3,7 +3,6 @@ package handlers
 import (
 	"app/internal/database"
 	"app/internal/template/login"
-	"app/internal/template/login2"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -33,7 +32,7 @@ func PostLogin(database database.Connection) http.HandlerFunc {
 		if err != nil {
 			w.Header().Set("Status-Code", strconv.Itoa(http.StatusUnauthorized))
 			w.Header().Set("HX-Retarget", "input[name='password']")
-			login2.PasswordError().Render(r.Context(), w)
+			login.PasswordError().Render(r.Context(), w)
 		} else {
 			w.Header().Set("Set-Cookie", fmt.Sprintf("token=%s; HttpOnly; SameSite=Lax", session.Token))
 			w.Header().Set("HX-Redirect", "/")

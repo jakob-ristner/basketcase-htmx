@@ -15,23 +15,51 @@ h1 {
     display: inline;
     display: inline;
     color: var(--ctp-text);
-    font-size: 5rem;
+    font-size: 3rem;
     font-family: Playfair Display;
     font-weight: 300;
+    letter-spacing: 3px;
+
+    &>span {
+        background-color: var(--ctp-lavender);
+        --app-box-shadow-offset: 5px;
+        --app-box-shadow-blur: 0px;
+        --app-box-shadow-spread: 0px;
+        box-shadow: var(--app-box-shadow-offset) var(--app-box-shadow-offset) var(--app-box-shadow-blur) var(--app-box-shadow-spread) var(--app-box-shadow-col);
+
+    }
 }
 
 
+@media screen and (min-width: 600px) {
+    h1 {
+        font-size: 5rem;
+    }
+
+}
+
 body {
-    background-color: var(--ctp-base);
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+}
+
+body>div {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
     justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-size: contain;
+    background-color: var(--ctp-base);
 }
 
 
 form {
-    background-color: var(--ctp-crust);
     padding: 3rem;
+    width: 18rem;
     padding-top: 1rem;
     gap: 2rem;
     display: flex;
@@ -39,7 +67,6 @@ form {
     border-radius: var(--app-border-radius-md);
     justify-content: center;
     flex-direction: column;
-    box-shadow: var(--app-box-shadow-offset) var(--app-box-shadow-offset) var(--app-box-shadow-blur) var(--app-box-shadow-spread) var(--app-box-shadow-col);
 }
 
 .content {
@@ -86,11 +113,10 @@ input.error {
 label {
     align-self: flex-start;
     margin-bottom: -2.8rem;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     line-height: 0.8rem;
     color: var(--ctp-subtext0);
     font-weight: 600;
-    font-family: Consolas;
     transition: color var(--app-transition-quick);
 
     &:has(+input:focus) {
@@ -115,12 +141,10 @@ input:-webkit-autofill {
 }
 
 button {
-    background-color: var(--ctp-blue);
+    background-color: var(--ctp-lavender);
     width: 100%;
     padding: 0em;
     height: 3em;
-    font-family: Consolas;
-    letter-spacing: 0.02em;
     border-radius: var(--app-border-radius-md);
     border: none;
     outline: none;
@@ -142,7 +166,7 @@ button {
     &:hover,
     &:active,
     &:focus-visible {
-        background-color: hsl(from var(--ctp-blue) h s calc(l * 1.1));
+        background-color: hsl(from var(--ctp-lavender) h s calc(l * 1.1));
     }
 
     &:active {

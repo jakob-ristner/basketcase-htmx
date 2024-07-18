@@ -54,11 +54,6 @@ func main() {
 		middleware.Log,
 	))
 
-	mux.HandleFunc("GET /login2", middleware.Stack(
-		handlers.GetLogin2,
-		middleware.Log,
-	))
-
 	mux.HandleFunc("POST /login", middleware.Stack(
 		handlers.PostLogin(database),
 		middleware.Log,

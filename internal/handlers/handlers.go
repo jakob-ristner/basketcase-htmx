@@ -6,7 +6,6 @@ import (
 	"app/internal/template/admin"
 	"app/internal/template/ingredients"
 	"app/internal/template/lists"
-	"app/internal/template/login2"
 	"app/internal/template/recipes"
 	"context"
 	"net/http"
@@ -23,10 +22,6 @@ func ServeStaticFiles(w http.ResponseWriter, r *http.Request) {
 	filePath := r.URL.Path[len("/static/"):]
 	fullPath := filepath.Join(".", "static", filePath)
 	http.ServeFile(w, r, fullPath)
-}
-
-func GetLogin2(w http.ResponseWriter, r *http.Request) {
-	login2.Login().Render(r.Context(), w)
 }
 
 func GetLists(w http.ResponseWriter, r *http.Request) {

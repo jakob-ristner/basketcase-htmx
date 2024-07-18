@@ -111,7 +111,7 @@
 
 }
 
-@media (min-width: 768px) {
+@media (min-width: 600px) {
     .navbar>form {
         width: 20rem;
         display: flex;
