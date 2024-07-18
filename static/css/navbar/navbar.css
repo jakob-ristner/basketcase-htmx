@@ -126,7 +126,7 @@
         --_underline-color: hsl(from var(--ctp-lavender) h s l / 100%);
         --_underline-height: 0.1rem;
         --_item_width: 33.3333%;
-        --_underline-width: calc(var(--_item_width) / 1.5);
+        --_underline-width: 4rem;
 
         &:has(input:nth-child(3):checked)::before {
             margin-left: calc(var(--_item_width) + (var(--_item_width) - var(--_underline-width)) / 2);
@@ -170,7 +170,28 @@
             display: flex;
             align-items: center;
             justify-content: center;
+
+            &::after {
+                content: "";
+                position: absolute;
+                opacity: 0;
+                bottom: 0;
+                background-color: hsl(from var(--ctp-subtext0) h s l / 30%);
+                height: var(--_underline-height);
+                width: var(--_underline-width);
+                transition: opacity ease-in-out 0.1s;
+            }
+
+            &:hover,
+            &:focus,
+            &:focus-visible {
+                &::after {
+                    opacity: 1;
+                }
+
+            }
         }
+
     }
 
     .navbar>input[id="menu"]+label {
