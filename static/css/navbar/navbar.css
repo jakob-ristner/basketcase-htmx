@@ -3,8 +3,19 @@
     --_nav-shadow-blur: 5px;
     --nav_shadow_spread: -4px;
     --_nav_shadow_color: var(--ctp-text);
-    --_nav-bg: var(--ctp-mantle);
-    --_nav-text: var(--ctp-text);
+    --_nav-height: 2.5rem;
+
+    --_nav-bg: var(--ctp-crust);
+
+    --_nav-item-bg: var(--_nav-bg);
+    --_nav-item-hover-bg: var(--ctp-mantle);
+    --_nav-item-selected-bg: hsl(from var(--ctp-lavender) h calc(s * 0.9) calc(l * 1.2));
+
+    --_nav-item-text: var(--ctp-subtext0);
+    --_nav-item-hover-text: var(--ctp-text);
+    --_nav-item-selected-text: var(--ctp-text);
+
+
 
     background-color: var(--_nav-bg);
     overflow: hidden;
@@ -16,116 +27,104 @@
     display: flex;
 
 
-    height: 3rem;
+    height: var(--_nav-height);
+}
+
+input[id="menu"] {
+    display: none;
+
+    &+label:hover,
+    &+label:focus,
+    &+label:focus-visible {
+        cursor: pointer;
+        background-color: var(--ctp-crust);
+    }
+
+    &:checked+label {
+        background-color: var(--ctp-blue);
+        color: var(--ctp-text);
+    }
+
+    &:checked~form {
+        display: flex;
+    }
 }
 
 form {
     margin: 0;
-    height: 100%;
+    --_nav-bg: var(--ctp-surface1);
     background-color: var(--_nav-bg);
-    width: 50%;
 
-    position: relative;
+    height: calc(100% - var(--_nav-height));
+    width: 10rem;
+    position: absolute;
+    flex-direction: column;
+    top: var(--_nav-height);
 
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-
-
-    &:has(input:nth-child(3):checked)::after {
-        margin-left: 33.33333%;
-    }
-
-    &:has(input:nth-child(5):checked)::after {
-        margin-left: 66.33333%;
-    }
-
-    &::after {
-        content: "";
-        width: 33.33333%;
-        height: 100%;
-        z-index: 0;
-        position: absolute;
-        left: 0;
-        transition:
-            margin-left 0.08s,
-            background-color 0.08s;
-        bottom: 0;
-    }
-
-
-    &:has(input[value="admin"]) {
-
-        &::after {
-            width: 25%;
-        }
-        
-
-        &:has(input:nth-child(3):checked)::after {
-            margin-left: 25%;
-        }
-
-        &:has(input:nth-child(5):checked)::after {
-            margin-left: 50%;
-        }
-
-        &:has(input:nth-child(7):checked)::after {
-            margin-left: 75%;
-        }
-    }
-
-
-
-    &:has(:checked+label[for="lists"])::after {
-        --_list-bg: var(--ctp-blue);
-        background-color: hsl(from var(--_list-bg) h s l / 40%);
-    }
-
-    &:has(:checked+label[for="recipes"])::after {
-        --_recipe-bg: var(--ctp-pink);
-        background-color: hsl(from var(--_recipe-bg) h s l / 40%);
-    }
-
-    &:has(:checked+label[for="ingredients"])::after {
-        --_ingredient-bg: var(--ctp-green);
-        background-color: hsl(from var(--_ingredient-bg) h s l / 40%);
-    }
-
-    &:has(:checked+label[for="admin"])::after {
-        --_admin-bg: var(--ctp-yellow);
-        background-color: hsl(from var(--_admin-bg) h s l / 40%);
-    }
+    display: none;
 
     & input {
         display: none;
 
         &+label {
-            height: 100%;
             display: flex;
-
-            flex: 1;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 1rem;
 
             font-weight: 600;
+            font-size: 0.8rem;
+            height: 2rem;
+
+            --_nav-item-bg: var(--_nav-bg);
+            background-color: var(--_nav-item-bg);
+            color: var(--_nav-item-text);
 
             transition: background-color 0.08s;
 
             &:hover,
             &:focus,
             &:focus-visible {
-                background-color: var(--ctp-crust);
+                --_nav-item-bg: var(--_nav-item-hover-bg);
+                --_nav-item-text: var(--_nav-item-hover-text);
                 cursor: pointer;
-
             }
 
-            & span {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex: 1;
-                z-index: 1;
-            }
         }
+
+        &:checked+label {
+            --_nav-item-bg: var(--_nav-item-selected-bg);
+            --_nav-item-text: var(--_nav-item-selected-text);
+        }
+    }
+
+}
+
+@media (min-width: 768px) {
+    form {
+        width: 20rem;
+        height: 100%;
+        display: flex;
+        position: relative;
+        top: 0;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+
+        --_nav-bg: var(--ctp-crust);
+
+        & input + label {
+            flex: 1;
+            height: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    input[id="menu"]+label {
+        display: none;
     }
 
 }

@@ -1,11 +1,11 @@
-<link rel=\"stylesheet\" href=\"/static/css/navbar/navbar.css\"><div class=\"navbar\"><form hx-boost=\"true\" hx-get=\"/navigate\" hx-trigger=\"change\" hx-target=\".navbar + div\" hx-select=\".navbar + div\" hx-swap=\"outerHTML\"><input type=\"radio\" id=\"lists\" name=\"route\" value=\"lists\"
+<link rel=\"stylesheet\" href=\"/static/css/navbar/navbar.css\"><div class=\"navbar\"><input type=\"checkbox\" id=\"menu\"> <label for=\"menu\">menu</label><form hx-boost=\"true\" hx-get=\"/navigate\" hx-trigger=\"change\" hx-target=\".navbar + div\" hx-select=\".navbar + div\" hx-swap=\"outerHTML\" id=\"nav-form\"><input type=\"radio\" id=\"lists\" name=\"route\" value=\"lists\"
  checked
-> <label for=\"lists\"><span>Lists</span></label> <input type=\"radio\" id=\"recipes\" name=\"route\" value=\"recipes\"
+> <label for=\"lists\">Lists</label> <input type=\"radio\" id=\"recipes\" name=\"route\" value=\"recipes\"
  checked
-> <label for=\"recipes\"><span>Recipes</span></label> <input type=\"radio\" id=\"ingredients\" name=\"route\" value=\"ingredients\"
+> <label for=\"recipes\">Recipes</label> <input type=\"radio\" id=\"ingredients\" name=\"route\" value=\"ingredients\"
  checked
-> <label for=\"ingredients\"><span>Ingredients</span></label> 
+> <label for=\"ingredients\">Ingredients</label> 
 <input type=\"radio\" id=\"admin\" name=\"route\" value=\"admin\"
  checked
-> <label for=\"admin\"><span>Admin</span></label>
-</form></div>
+> <label for=\"admin\">Admin</label>
+</form><script>\r\n\t\t\twindow.addEventListener('click', function(e){   \r\n  \t\t\tif (!(document.getElementById('nav-form').contains(e.target) || document.getElementById('menu').contains(e.target) || e.target.tagName == 'LABEL')) {\r\n\t\t\t\t\tdocument.getElementById('menu').checked = false;\r\n  \t\t\t}\r\n  \t\t});\r\n\t\t</script></div>

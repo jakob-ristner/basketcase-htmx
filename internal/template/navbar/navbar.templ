@@ -3,17 +3,26 @@ package navbar
 templ NavBar(route RouteId, admin bool) {
 	<link rel="stylesheet" href="/static/css/navbar/navbar.css"/>
 	<div class="navbar">
-		<form hx-boost="true" hx-get="/navigate" hx-trigger="change" hx-target=".navbar + div" hx-select=".navbar + div" hx-swap="outerHTML">
+		<input type="checkbox" id="menu"/>
+		<label for="menu">menu</label>
+		<form hx-boost="true" hx-get="/navigate" hx-trigger="change" hx-target=".navbar + div" hx-select=".navbar + div" hx-swap="outerHTML" id="nav-form">
 			<input type="radio" id="lists" name="route" value="lists" checked?={ route == ListsId }/>
-			<label for="lists"><span>Lists</span></label>
+			<label for="lists">Lists</label>
 			<input type="radio" id="recipes" name="route" value="recipes" checked?={ route == RecipesId }/>
-			<label for="recipes"><span>Recipes</span></label>
+			<label for="recipes">Recipes</label>
 			<input type="radio" id="ingredients" name="route" value="ingredients" checked?={ route == IngredientsId }/>
-			<label for="ingredients"><span>Ingredients</span></label>
+			<label for="ingredients">Ingredients</label>
 			if admin {
 				<input type="radio" id="admin" name="route" value="admin" checked?={ route == AdminId }/>
-				<label for="admin"><span>Admin</span></label>
+				<label for="admin">Admin</label>
 			}
 		</form>
+		<script>
+			window.addEventListener('click', function(e){   
+  			if (!(document.getElementById('nav-form').contains(e.target) || document.getElementById('menu').contains(e.target) || e.target.tagName == 'LABEL')) {
+					document.getElementById('menu').checked = false;
+  			}
+  		});
+		</script>
 	</div>
 }
