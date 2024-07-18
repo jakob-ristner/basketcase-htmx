@@ -1,9 +1,9 @@
 package shared
 
-
 templ Base() {
 	<html>
 		<head>
+			<link rel="stylesheet" href="/static/css/navbar/navbar.css"/>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 			<script src="https://unpkg.com/htmx.org@1.9.11"></script>
@@ -11,7 +11,7 @@ templ Base() {
 			<link rel="stylesheet" href="/static/css/style.css"/>
 		</head>
 		<body>
-				{ children... }
+			{ children... }
 		</body>
 	</html>
 }

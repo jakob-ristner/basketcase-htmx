@@ -5,11 +5,11 @@
     --_nav_shadow_color: var(--ctp-text);
     --_nav-height: 2.5rem;
 
-    --_nav-bg: var(--ctp-crust);
+    --_nav-bg: var(--ctp-mantle);
 
     --_nav-item-bg: var(--_nav-bg);
     --_nav-item-hover-bg: var(--ctp-mantle);
-    --_nav-item-selected-bg: hsl(from var(--ctp-lavender) h calc(s * 0.9) calc(l * 1.2));
+    --_nav-item-selected-bg: hsl(from var(--ctp-lavender) h s l / 70%);
 
     --_nav-item-text: var(--ctp-subtext0);
     --_nav-item-hover-text: var(--ctp-text);
@@ -30,7 +30,7 @@
     height: var(--_nav-height);
 }
 
-input[id="menu"] {
+.navbar>input[id="menu"] {
     display: none;
 
     &+label:hover,
@@ -50,16 +50,27 @@ input[id="menu"] {
     }
 }
 
-form {
+.navbar>form::after {
+    content: "";
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: hsl(from var(--ctp-text) h s l / 20%);
+    z-index: -1;
+}
+
+.navbar>form {
+    --_nav-width: 10rem;
+
     margin: 0;
-    --_nav-bg: var(--ctp-surface1);
     background-color: var(--_nav-bg);
 
-    height: calc(100% - var(--_nav-height));
-    width: 10rem;
+    /* height: calc(50% - var(--_nav-height)); */
+    width: var(--_nav-width);
     position: absolute;
     flex-direction: column;
     top: var(--_nav-height);
+    z-index: 1;
 
     display: none;
 
@@ -93,7 +104,7 @@ form {
         }
 
         &:checked+label {
-            --_nav-item-bg: var(--_nav-item-selected-bg);
+            /* --_nav-item-bg: var(--_nav-item-selected-bg); */
             --_nav-item-text: var(--_nav-item-selected-text);
         }
     }
@@ -101,21 +112,60 @@ form {
 }
 
 @media (min-width: 768px) {
-    form {
+    .navbar>form {
         width: 20rem;
-        height: 100%;
         display: flex;
         position: relative;
         top: 0;
+        z-index: 2;
+        width: 25rem;
         flex-direction: row;
         align-items: center;
         justify-content: flex-start;
 
-        --_nav-bg: var(--ctp-crust);
+        --_underline-color: hsl(from var(--ctp-lavender) h s l / 100%);
+        --_underline-height: 0.1rem;
+        --_item_width: 33.3333%;
+        --_underline-width: calc(var(--_item_width) / 1.5);
 
-        & input + label {
+        &:has(input:nth-child(3):checked)::before {
+            margin-left: calc(var(--_item_width) + (var(--_item_width) - var(--_underline-width)) / 2);
+        }
+
+        &:has(input:nth-child(5):checked)::before {
+            margin-left: calc(var(--_item_width) * 2 + (var(--_item_width) - var(--_underline-width)) / 2);
+        }
+
+        &:has(input:nth-child(7):checked)::before {
+            margin-left: calc(var(--_item_width) * 3 + (var(--_item_width) - var(--_underline-width)) / 2);
+        }
+
+
+        &:has(input[id="admin"]) {
+            --_item_width: 25%;
+        }
+
+        &::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            background-color: hsl(from var(--ctp-lavender) h s l / 100%);
+            height: var(--_underline-height);
+            z-index: 1;
+            margin-left: calc((var(--_item_width) - var(--_underline-width)) / 2);
+            width: var(--_underline-width);
+            transition: margin-left ease-in-out 0.1s;
+        }
+
+        &::after {
+            display: none;
+        }
+
+
+        & input+label {
             flex: 1;
             height: 100%;
+            position: relative;
 
             display: flex;
             align-items: center;
@@ -123,7 +173,7 @@ form {
         }
     }
 
-    input[id="menu"]+label {
+    .navbar>input[id="menu"]+label {
         display: none;
     }
 

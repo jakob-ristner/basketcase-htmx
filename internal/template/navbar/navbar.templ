@@ -1,7 +1,6 @@
 package navbar
 
 templ NavBar(route RouteId, admin bool) {
-	<link rel="stylesheet" href="/static/css/navbar/navbar.css"/>
 	<div class="navbar">
 		<input type="checkbox" id="menu"/>
 		<label for="menu">menu</label>
@@ -23,6 +22,14 @@ templ NavBar(route RouteId, admin bool) {
 					document.getElementById('menu').checked = false;
   			}
   		});
+
+		window.addEventListener('popstate', function(e){
+			var route = window.location.pathname.split('/')[1];
+			if (route == '') {
+				route = 'lists';
+			}
+			document.getElementById(route).checked = true;
+		});
 		</script>
 	</div>
 }
